@@ -18,10 +18,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+
+        'name', 'email', 'password',
+        'is_admin', 'is_banned', 'reputation'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -32,7 +33,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+ protected $casts = [
+        'is_admin'  => 'boolean',
+        'is_banned' => 'boolean',
+    ];
     /**
      * Get the attributes that should be cast.
      *
@@ -44,5 +48,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+public function memberships() {
+        return $this->hasMany(Membership::class);
     }
 }
