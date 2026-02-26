@@ -47,7 +47,7 @@ class ExpenseController extends Controller
 
         Expense::create($validated);
 
-        return redirect()->route('expenses.index')->with('success', 'Expense created successfully.');
+        return redirect()->route('expenses.index')->with('success', 'Depense cree avec succes.');
     }
 
     /**
@@ -101,5 +101,6 @@ class ExpenseController extends Controller
         }
         $expense->delete();
         return redirect()->route('expenses.index')->with('success', 'Expense deleted successfully.');
-    }
+
+        }
 }
