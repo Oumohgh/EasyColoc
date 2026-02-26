@@ -25,34 +25,28 @@ class ColocationController extends Controller
     {
         $user = auth()->user();
 
-        // Check if user already has an active colocation
-        $alreadyMember = Membership::where('user_id', $user->id)
-                                   ->whereNull('left_at')
-                                   ->exists();
+        $alreadyMember = Membership::where('user_id', $user->id)->whereNull('left_at')->exists();
 
         if ($alreadyMember) {
-            return redirect()->route('colocations.create')
-                             ->with('error', 'You already have an active colocation.');
+            return redirect()->route('colocations.create')->with('error', 'Vous avez deja une colocation active.');
         }
 
-        // Create the colocation
+
         $colocation = Colocation::create($request->validated());
 
-        // Attach the creator as owner
+
         $colocation->members()->attach($user->id, [
             'role'      => 'owner',
             'joined_at' => now(),
         ]);
 
-        return redirect()->route('colocations.index')
-                         ->with('success', 'Colocation created successfully.');
+        return redirect()->route('colocations.index')->with('success', 'Colocation created successfully.');
     }
 
     public function show(Colocation $colocation)
     {
         $members  = $colocation->activeMembers()->get();
         $expenses = $colocation->expenses()->latest()->get();
-
         return view('colocations.show', compact('colocation', 'members', 'expenses'));
     }
 
@@ -65,34 +59,29 @@ class ColocationController extends Controller
     {
         $colocation->update($request->validated());
 
-        return redirect()->route('colocations.show', $colocation)
-                         ->with('success', 'Colocation updated successfully.');
+        return redirect()->route('colocations.show', $colocation)->with('success', 'Colocation updated successfully.');
     }
 
     public function destroy(Colocation $colocation)
     {
-        $colocation->cancel(); // status = cancelled, cancelled_at = now()
+        $colocation->cancel();
 
-        return redirect()->route('colocations.index')
-                         ->with('success', 'Colocation cancelled successfully.');
+        return redirect()->route('colocations.index')->with('success', 'Colocation cancelled successfully.');
     }
 
     public function leave(Colocation $colocation)
     {
         $user = auth()->user();
 
-        // Find active membership
         $membership = Membership::where('user_id', $user->id)
-                                ->where('colocation_id', $colocation->id)
-                                ->whereNull('left_at')
-                                ->first();
+                                ->where('colocation_id', $colocation->id)->whereNull('left_at')->first();
 
-        // Not a member → forbidden
+
         if (!$membership) {
             abort(403);
         }
 
-        // Owner cannot leave
+
         if ($membership->role === 'owner') {
             return redirect()->route('colocations.index')
                              ->with('error', 'Owners cannot leave. Cancel the colocation instead.');
@@ -114,6 +103,7 @@ class ColocationController extends Controller
         }
 
         return redirect()->route('colocations.index')
-                         ->with('success', 'You have left the colocation.');
+                         ->with('success', 'Vous avez quitte la colocation.');
     }
+    ri
 }
