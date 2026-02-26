@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invitation extends Model
 {
-    protected $casts=[
-        'expires_at'=>'datetime',
-    ];
+
+protected $fillable=[
+    'user_id','coloc'
+]
+    
 
     //colocation
     public function colocation(){

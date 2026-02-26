@@ -34,10 +34,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
- protected $casts = [
-        'is_admin'  => 'boolean',
-        'is_banned' => 'boolean',
-    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -59,12 +56,12 @@ public function memberships() {
     public function colocations(){
         return $this->BelongsToMany(Colocation::class,'memberships')->withPivot('role','joined_at','left_at')->withTimestamps();
     }
-    //user wahed --- exp(taykhless)
+    //user wahed --- exp(taykhless bzaf dial expense)
     public function expenses(){
         return $this->hasMany(Expense::class);
     }
 
-    //user wahed --bzaf dial expenseshare(li tay tssal)
+    //user wahed taytssal --bzaf dial expenseshare(li tay tssal)
     public function expenseShares(){
         return $this->hasMany(ExpenseShare::class);
     }
@@ -74,6 +71,6 @@ public function memberships() {
     }
 
     public function receivedInvitations(){
-        return $this->hasMnay(Invitation::class,'invited_user_id');
+        return $this->hasMany(Invitation::class,'invited_user_id');
     }
 }
