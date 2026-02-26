@@ -6,5 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExpenseShare extends Model
 {
-    //
+    protected $fillable = [
+          'expense_id', 'user_id','amount_owed', 'is_paid', 'paid_at'
+    ];
+
+    public function expense(){
+        return $this->belongsTo(Expense::class);
+    }
+
+    public function  user(){
+        return $this->belongsTo(User::class);
+    }
 }

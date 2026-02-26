@@ -8,15 +8,15 @@ class Invitation extends Model
 {
 
 protected $fillable=[
-    'user_id','coloc'
-]
-    
+   'colocation_id', 'invited_by', 'invited_user_id','email', 'token', 'status', 'expires_at'
+    ];
+
 
     //colocation
     public function colocation(){
-        return $this->belongsTo(Colocation::class,'invited_by');
+        return $this->belongsTo(Colocation::class);
     }
     public function Inviter(){
-        return $this->belongsTo()
+        return $this->belongsTo(User::class);
     }
 }
