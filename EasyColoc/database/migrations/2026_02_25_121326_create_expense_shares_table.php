@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('expense_id')->constrained()->restrictOnDelete();
             $table->decimal('amount_owned');
             $table->boolean('paid_at')->nullable();
-            $table->unique(['expense_id','user_id']);//
+            $table->unique(['expense_id','user_id']);
             $table->foreignId('user_id')->constrained()->restrictOnDelete();
             $table->timestamps();
         });

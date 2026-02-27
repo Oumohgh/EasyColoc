@@ -265,7 +265,7 @@
                     <button type="submit"
                         class="flex-1 py-2 bg-red-500 hover:bg-red-600 text-white
                                rounded-xl text-sm font-bold transition">
-                        Yes, Ban
+                        Oui,Banner
                     </button>
                 </div>
             </form>
