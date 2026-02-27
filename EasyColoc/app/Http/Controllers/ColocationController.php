@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Colocation;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Membership;
 use App\Models\User;
+
 use App\Http\Requests\ColocationRequest;
 use Illuminate\Http\Request;
 
@@ -73,22 +75,16 @@ class ColocationController extends Controller
     {
         $user = auth()->user();
 
-        $membership = Membership::where('user_id', $user->id)
-                                ->where('colocation_id', $colocation->id)->whereNull('left_at')->first();
-
+        $membership = Membership::where('user_id', $user->id)->where('colocation_id', $colocation->id)->whereNull('left_at')->first();
 
         if (!$membership) {
             abort(403);
         }
-
-
-        if ($membership->role === 'owner') {
-            return redirect()->route('colocations.index')
-                             ->with('error', 'Owners cannot leave. Cancel the colocation instead.');
-        }
+        // if ($membership->role === 'owner') {
+        //     return redirect()->route('colocations.index');
+        // }
 
         $membership->update(['left_at' => now()]);
-
 
         $hasDebt = $colocation->expenses()
                               ->whereHas('shares', fn($q) =>
@@ -97,9 +93,9 @@ class ColocationController extends Controller
                               )->exists();
 
         if ($hasDebt) {
-            $user->decrement('reputation');
+            $user->des;
         } else {
-            $user->increment('reputation');
+            $user->;
         }
 
         return redirect()->route('colocations.index')
