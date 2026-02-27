@@ -15,7 +15,7 @@ class Colocation extends Model
     }
 
     public function members(){
-        return $this->belongstoMany(User::class,'memberships')->withPivot('role','joined_at','left_at')->withTimestamps();
+        return $this->belongstoMany(User::class,'memberships')->withPivot('id','role','joined_at','left_at')->withTimestamps();
     }
 
 
@@ -34,6 +34,17 @@ class Colocation extends Model
     public function invitations(){
         return $this->hasMany(Invitation::class);
     }
+ public function activeMembers()
+    {
+        return $this->members()->wherePivot('left_at');
+    }
 
+    public function getOwner()
+    {
+        return $this->members()->wherePivot('role', 'owner')->wherePivotNull('left_at')->first();
+    }
 
+    public function cancel(){
+        $this->update(['status'=>'cancel','cancelled_at'=>now(),]);
+    }
 }
