@@ -31,6 +31,17 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
 
     });
 
+     Route::middleware('is.admin')->prefix('admin')->name('admin.')->group(function () {
+
+        Route::get('/dashboard',            [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/users',                [AdminController::class, 'users'])->name('users');
+        Route::patch('/users/{user}/ban',   [AdminController::class, 'ban'])->name('users.ban');
+        Route::patch('/users/{user}/unban', [AdminController::class, 'unban'])->name('users.unban');
+
+    });
+
+    
+
 });
 
 require __DIR__.'/auth.php';
