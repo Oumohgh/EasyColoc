@@ -23,13 +23,7 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::middleware('is.admin')->prefix('admin')->name('admin.')->group(function () {
-
-        Route::get('/dashboard',            [AdminController::class, 'dashboard'])->name('dashboard');
-        Route::patch('/users/{user}/ban',   [AdminController::class, 'ban'])->name('users.ban');
-        Route::patch('/users/{user}/unban', [AdminController::class, 'unban'])->name('users.unban');
-
-    });
+   
 
      Route::middleware('is.admin')->prefix('admin')->name('admin.')->group(function () {
 
@@ -40,7 +34,7 @@ Route::middleware(['auth', 'check.banned'])->group(function () {
 
     });
 
-    
+
 
 });
 

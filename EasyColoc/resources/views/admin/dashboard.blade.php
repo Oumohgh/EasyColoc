@@ -250,6 +250,7 @@
             <h3 class="text-base font-extrabold text-gray-900 text-center mb-1">Ban User</h3>
             <p class="text-sm text-gray-500 text-center mb-6">
                 Es-tu sur de vouloir bannir
+                <span id="ban-user-name" class="font-semibold text-gray-800"></span>
 
             </p>
 
